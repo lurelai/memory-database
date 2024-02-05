@@ -9,20 +9,20 @@ class Database{
             this.currentId = 0
         }
 
-        create(add){
+        create(add, message='Document created'){
             return new Promise((resolve, reject)=>{
                 try{
                     Database.documents.get(this.name).set(this.currentId, add)
                     this.currentId += 1
 
-                    resolve({message: 'user add', documents: Database.documents})
+                    resolve({message})
                 }catch(err){
                     throw err
                 }
             })
         }
 
-        find(callBack){
+        list(callBack, message='okay'){
             return new Promise((resolve, reject)=>{
                 try{
                     let a = Array.from(Database.documents.get(this.name).entries())
@@ -31,7 +31,24 @@ class Database{
                         callBack(value[0], value[1])
                     }
 
-                    resolve({mesage: 'okay'});
+                    resolve({message});
+                }catch(err){
+                    throw err
+                }
+            })
+        }
+
+        delete(id, message='Document deleted'){
+            return new Promise((resolve, reject)=>{
+                try{
+                    const tryIt = Database.documents.get(this.name).get(id)
+
+                    if(!tryIt)
+                        resolve({message: 'ID not found'})
+
+                    
+                    Database.documents.get(this.name).delete(id)
+                    resolve({message})
                 }catch(err){
                     throw err
                 }

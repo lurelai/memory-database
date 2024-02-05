@@ -7,12 +7,19 @@ const db = new memoryDatabase();
 const collection = new db.Collection;
 
 (async ()=>{
-    let a = await collection.create({ name: 'lucas', idade: 10 })
-    let c = await collection.create({ name: 'pedro', idade: 10 })
+    await collection.create({ name: 'simao', idade: 10 })
+    await collection.create({ name: 'joao', idade: 15 })
+    await collection.create({ name: 'ariel', idade: 12 })
+    await collection.create({ name: 'judas', idade: 12 })
 
-    await collection.find((id, values)=>{
-        if(values.name === 'lucas' && values.idade === 12)
-            console.log('ok')
+    await collection.list((id, values)=>{
+        console.log(id, values)
+    }) 
+
+    await collection.delete(0)
+
+    await collection.list((id, values)=>{
+        console.log(id, values)
     })
 })()
 
