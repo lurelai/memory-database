@@ -14,8 +14,19 @@ class Database{
                 this.currentId = 0
             }
 
-            set create(obj){
-                console.log(Collection)
+            create(obj){
+                return new Promise((resolve, reject)=>{
+                    try{
+                        Collection.documents.set(this.currentId, obj)
+                        resolve({message: 'Document added'})
+
+                    }catch(err){
+                        console.log(err)
+                        reject({message: 'An error'})
+                    }
+                })
+
+                this.currentId += 1
             }
         }
 
