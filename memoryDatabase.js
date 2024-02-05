@@ -3,19 +3,19 @@ class Database{
 
     Collection = class{
         constructor(collectionName = 'myCollection'){
-            Database.documents.set(collectionName, new Map())
-
             this.name = collectionName
             this.currentId = 0
+
+            Database.documents.set(collectionName, new Map())
         }
 
-        create(add, message='Document created'){
+        create(add, message='document created'){
             return new Promise((resolve, reject)=>{
                 try{
                     Database.documents.get(this.name).set(this.currentId, add)
                     this.currentId += 1
 
-                    resolve({message})
+                    return resolve({message})
                 }catch(err){
                     throw err
                 }
@@ -31,27 +31,39 @@ class Database{
                         callBack(value[0], value[1])
                     }
 
-                    resolve({message});
+                    return resolve({message});
                 }catch(err){
                     throw err
                 }
             })
         }
 
-        delete(id, message='Document deleted'){
+        delete(id, message='document deleted'){
             return new Promise((resolve, reject)=>{
                 try{
                     const tryIt = Database.documents.get(this.name).get(id)
 
                     if(!tryIt)
-                        resolve({message: 'ID not found'})
+                        return resolve({message: 'invalid id'})
 
                     
                     Database.documents.get(this.name).delete(id)
-                    resolve({message})
+                    return resolve({message})
                 }catch(err){
                     throw err
                 }
+            })
+        }
+
+        update(id, newValue, message='document updated'){
+            return new Promise((resolve, reject)=>{
+                let tryIt = Database.documents.get(this.name).get(id)
+
+                if(!tryIt)
+                    return resolve({message: 'invalid id'})
+
+                Database.documents.get(this.name).set(id, newValue)
+                return resolve({message})
             })
         }
     }

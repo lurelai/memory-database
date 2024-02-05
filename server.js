@@ -4,7 +4,7 @@ const fastify = require('fastify')({
 
 const memoryDatabase = require('./memoryDatabase');
 const db = new memoryDatabase();
-const collection = new db.Collection;
+const collection = new db.Collection('teste');
 
 (async ()=>{
     await collection.create({ name: 'simao', idade: 10 })
@@ -17,6 +17,7 @@ const collection = new db.Collection;
     }) 
 
     await collection.delete(0)
+    await collection.update(1, {name:'lucas', idade: 16})
 
     await collection.list((id, values)=>{
         console.log(id, values)
