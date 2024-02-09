@@ -3,7 +3,7 @@
 ### Put in your code
 You can use running it in your Database folder
 ```zsh
-curl "github.com/lurelai/memory-database/" --output "memoryDatabase.js"
+curl "https://raw.githubusercontent.com/lurelai/memory-database/main/memoryDatabase.js" --output "memoryDatabase.js"
 ```
 
 ### Usage
@@ -35,7 +35,7 @@ module.exports = studentModel;
 
 // ===================================================
 // In your app.js
-const studentModel = require('./src/Models/studentModel.js')
+const studentModel = require('./src/Models/studentModel.js');
 
 (async ()=>{
   await studentModel.create({name: "Freddie Mercury", age: -1})
