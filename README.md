@@ -47,17 +47,34 @@ const studentModel = require('./src/Models/studentModel.js');
 })()
 ```
 
+### It contains four functions, that are: "create", "delete", "update" and "list"
+```js
+(async ()=>{
+  await studentModel.create({name: "me", age: 16})
+  await studentModel.create({name: "you", age: "?"})
+  await studentModel.list((id, values)=>{
+    console.log(id, values)
+  })
+  // output: 0 {name: "me", age: 16}
+  // output: 1 {name: "you", age: "?"}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+  // now, pretend that i don't like you
+  await studentModel.list(async (id, values)=>{
+    if(values.name === "you")
+      await studentModel.delete(id)
+  })
+  
+  await studentModel.list((id, values)=>{
+    console.log(id, values)
+  })
+  // output: 0 {name: "me", age: 16}
+  
+  // i changed my opinion, i like you more then i like me
+  await studentModel.update(0, {name: "you", age: "?"})
+  
+  await studentModel.list((id, values)=>{
+    console.log(id, values)  
+  }) // output: 0 {name: "you", age: "?"}
+  // And now, we are the same
+})();
+```
